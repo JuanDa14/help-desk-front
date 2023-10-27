@@ -12,15 +12,15 @@ const LoginPage = async () => {
 	}
 
 	return (
-		<Card>
+		<div className='shadow'>
 			<CardHeader>
-				<CardTitle>Ingresar</CardTitle>
+				<CardTitle>Municipalidad de Pueblo Nuevo</CardTitle>
 				<CardDescription>Inicia session con tu nombre de usuario</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<FormLogin />
 			</CardContent>
-		</Card>
+		</div>
 	);
 };
 

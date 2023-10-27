@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { Problem, ProblemState } from '@/interfaces/problem';
-import { Preview } from '@/components/preview';
 import { ShowProblemModal } from '@/components/modals/show-problem-modal';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<Problem>[] = [
 	{
@@ -26,22 +26,42 @@ export const columns: ColumnDef<Problem>[] = [
 			);
 		},
 	},
-
 	{
-		accessorKey: 'description',
+		accessorKey: 'user',
 		header: ({ column }) => {
 			return (
 				<Button
 					variant='ghost'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Desc. Problema
+					Creador
 					<ArrowUpDown className='ml-2 h-4 w-4' />
 				</Button>
 			);
 		},
 		cell: ({ row }) => {
-			return <Preview value={row.original.description} />;
+			return <span className='text-xs'>{row.original.user.name}</span>;
+		},
+	},
+	{
+		accessorKey: 'createdAt',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant='ghost'
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+				>
+					Fecha de creación
+					<ArrowUpDown className='ml-2 h-4 w-4' />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			return (
+				<span className='text-xs'>
+					{format(new Date(row.original.createdAt), 'dd-MM-yyyy')}
+				</span>
+			);
 		},
 	},
 	{
@@ -93,13 +113,11 @@ export const columns: ColumnDef<Problem>[] = [
 			const { _id } = row.original;
 			return (
 				<div className='flex items-center justify-center gap-x-2'>
-					{row.original.state !== ProblemState.Resuelto && (
-						<Link href={`/problems/${_id}`}>
-							<Button size={'icon'} type='button'>
-								<Pencil className='w-4 h-4' />
-							</Button>
-						</Link>
-					)}
+					<Link href={`/problems/${_id}`}>
+						<Button size={'icon'} type='button'>
+							<Pencil className='w-4 h-4' />
+						</Button>
+					</Link>
 					<ShowProblemModal problem={row.original}>
 						<Button size={'icon'} type='button'>
 							<EyeIcon className='w-4 h-4' />

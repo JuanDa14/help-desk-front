@@ -30,6 +30,7 @@ import { useSession } from 'next-auth/react';
 import { Solution } from '@/interfaces/solution';
 import { Editor } from '@/components/editor';
 import { Manual } from '@/interfaces/manual';
+import { Textarea } from '@/components/ui/textarea';
 
 const createManualSchema = z.object({
 	title: z.string({ required_error: 'El nombre es requerido' }).min(3, {
@@ -153,7 +154,7 @@ export const FormManual = ({ initialData, solutions }: FormManualProps) => {
 						control={form.control}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Solucion</FormLabel>
+								<FormLabel>Solucion asociada</FormLabel>
 								<Select
 									disabled={isSubmitting || !!solutionId}
 									onValueChange={field.onChange}
@@ -200,7 +201,11 @@ export const FormManual = ({ initialData, solutions }: FormManualProps) => {
 							<FormItem>
 								<FormLabel>Desc. Manual</FormLabel>
 								<FormControl>
-									<Input disabled={isSubmitting} placeholder='descripcion...' {...field} />
+									<Textarea
+										disabled={isSubmitting}
+										placeholder='descripcion...'
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

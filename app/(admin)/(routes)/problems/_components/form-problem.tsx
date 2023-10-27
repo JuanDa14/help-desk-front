@@ -54,12 +54,19 @@ export const FormProblem = ({ initialData }: FormProblemProps) => {
 
 	const form = useForm<z.infer<typeof createProblemSchema>>({
 		resolver: zodResolver(createProblemSchema),
-		defaultValues: initialData || {
-			title: '',
-			description: '',
-			type: 'Software',
-			state: 'En proceso',
-		},
+		defaultValues: initialData
+			? {
+					title: initialData.title,
+					description: initialData.description,
+					type: initialData.type,
+					state: initialData.state,
+			  }
+			: {
+					title: '',
+					description: '',
+					type: 'Software',
+					state: 'En proceso',
+			  },
 	});
 
 	const { isSubmitting } = form.formState;
@@ -191,7 +198,11 @@ export const FormProblem = ({ initialData }: FormProblemProps) => {
 							<FormItem>
 								<FormLabel>Descripcion</FormLabel>
 								<FormControl>
-									<Editor disabled={isSubmitting} {...field} />
+									<Editor
+										disabled={isSubmitting}
+										onChange={field.onChange}
+										value={field.value}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

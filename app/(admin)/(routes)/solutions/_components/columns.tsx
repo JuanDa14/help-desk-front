@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowUpDown, Files, Pencil } from 'lucide-react';
+import { ArrowUpDown, Files, FolderArchive, Pencil } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Solution } from '@/interfaces/solution';
 import { Preview } from '@/components/preview';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<Solution>[] = [
 	{
@@ -28,20 +29,24 @@ export const columns: ColumnDef<Solution>[] = [
 		),
 	},
 	{
-		accessorKey: 'description',
+		accessorKey: 'createdAt',
 		header: ({ column }) => {
 			return (
 				<Button
 					variant='ghost'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Descripción
+					Fecha de registro
 					<ArrowUpDown className='ml-2 h-4 w-4' />
 				</Button>
 			);
 		},
 		cell: ({ row }) => {
-			return <Preview value={row.original.description} />;
+			return (
+				<span className='text-sm'>
+					{format(new Date(row.original.createdAt), 'dd-MM-yyyy')}
+				</span>
+			);
 		},
 	},
 	{
@@ -75,7 +80,6 @@ export const columns: ColumnDef<Solution>[] = [
 			<span className='text-xs font-medium capitalize'>{row.original.problem.title}</span>
 		),
 	},
-
 	{
 		accessorKey: 'actions',
 		header: 'Acciones',
@@ -90,7 +94,7 @@ export const columns: ColumnDef<Solution>[] = [
 					</Link>
 					<Link href={`/manuals/create?solutionId=${_id}`}>
 						<Button size={'icon'} type='button' title='Crear Manual'>
-							<Files className='w-4 h-4' />
+							<FolderArchive className='w-4 h-4' />
 						</Button>
 					</Link>
 				</div>

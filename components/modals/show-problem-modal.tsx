@@ -13,6 +13,7 @@ import { Preview } from '../preview';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
 
 interface ShowProblemModalProps {
 	children: React.ReactNode;
@@ -25,18 +26,22 @@ export const ShowProblemModal = ({ children, problem }: ShowProblemModalProps) =
 			<DialogTrigger asChild>{children}</DialogTrigger>
 			<DialogContent>
 				<DialogHeader className='space-y-4'>
-					<DialogTitle>{problem.title}</DialogTitle>
+					<DialogTitle className='capitalize'>{problem.title}</DialogTitle>
 					<Separator />
-					<div className='flex flex-col gap-x-2 gap-y-2 item justify-center'>
-						<span className='text-sm font-medium'>
-							Registrado por: <span className='font-normal'>{problem.user.name}</span>
-						</span>
-						<span className='text-sm font-medium'>
-							Problema de tipo:
-							<span className='font-normal'> {problem.type}</span>
-						</span>
-						<span className='text-sm font-medium'>
-							Estado:{' '}
+					<div className=' space-y-2'>
+						<p>
+							Registrado por: <span>{problem.user.name}</span>
+						</p>
+						<p>
+							Fecha de registro:{' '}
+							<span>{format(new Date(problem.createdAt), 'dd-MM-yyyy')}</span>
+						</p>
+						<p>
+							Tipo de problema:
+							<span> {problem.type}</span>
+						</p>
+						<div className='flex items-center gap-2'>
+							<p>Estado: </p>
 							<Badge
 								className={cn(
 									'text-xs',
@@ -47,9 +52,12 @@ export const ShowProblemModal = ({ children, problem }: ShowProblemModalProps) =
 							>
 								{problem.state}
 							</Badge>
-						</span>
-						<div className='flex flex-col justify-center items-start border p-2 rounded-sm mt-2'>
-							<Preview value={problem.description} />
+						</div>
+						<div>
+							<p>Desc. del problema</p>
+							<div className='flex flex-col justify-center items-start border p-2 rounded-sm mt-2'>
+								<Preview value={problem.description} />
+							</div>
 						</div>
 					</div>
 				</DialogHeader>

@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { authOptions } from '@/lib/auth-options';
+import { cn } from '@/lib/utils';
 import { FileCheck, FileWarning, FilesIcon, Folder, List, Users2 } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
@@ -90,38 +91,49 @@ const RootPage = async () => {
 			label: 'Usuarios',
 			value: users.length,
 			Icon: Users2,
+			private: true,
 		},
 		{
 			label: 'Roles',
 			value: roles.length,
 			Icon: List,
+			private: true,
 		},
 		{
 			label: 'Áreas',
 			value: areas.length,
 			Icon: Folder,
+			private: true,
 		},
 		{
 			label: 'Problemas',
 			value: problems.length,
 			Icon: FileWarning,
+			private: false,
 		},
 		{
 			label: 'Soluciones',
 			value: solutions.length,
 			Icon: FileCheck,
+			private: false,
 		},
 		{
 			label: 'Manuales',
 			value: manuals.length,
 			Icon: FilesIcon,
+			private: false,
 		},
 	];
 
 	return (
 		<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4 p-6'>
 			{cardList.map((card, i) => (
-				<Card key={i}>
+				<Card
+					key={i}
+					className={cn(
+						card.private ? (session.user.role.name === 'ADMINISTRADOR' ? '' : 'hidden') : ''
+					)}
+				>
 					<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 						<CardTitle className='text-sm font-medium'>Total {card.label}</CardTitle>
 						<card.Icon />

@@ -13,4 +13,6 @@ export interface Solution {
 	type: SolutionType;
 	manual: string;
 	problem: Problem;
+	createdAt: string;
+	updatedAt: string;
 }

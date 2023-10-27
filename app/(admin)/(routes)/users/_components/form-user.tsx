@@ -37,8 +37,8 @@ const createUserSchema = z.object({
 		message: 'El nombre debe tener al menos 3 caracteres.',
 	}),
 	username: z.string({ required_error: 'El nombre de usuario es requerido' }),
-	password: z.string({ required_error: 'La contraseña es requerido' }).min(3, {
-		message: 'La contraseña debe tener al menos 3 caracteres.',
+	password: z.string({ required_error: 'La contraseña es requerido' }).min(6, {
+		message: 'La contraseña debe tener al menos 6 caracteres.',
 	}),
 	role: z
 		.string({ required_error: 'El rol es requerido' })
@@ -67,8 +67,6 @@ export const FormUser = ({ initialData, roles, areas }: FormUserProps) => {
 
 	const [isDeleting, setIsDeleting] = useState(false);
 
-	const roleIds = roles.map((rol) => rol._id);
-
 	const form = useForm<z.infer<typeof createUserSchema>>({
 		resolver: zodResolver(initialData ? updateUserSchema : createUserSchema),
 		defaultValues: {
@@ -81,7 +79,7 @@ export const FormUser = ({ initialData, roles, areas }: FormUserProps) => {
 			name: '',
 			username: '',
 			password: '',
-			role: roleIds[0],
+			role: roles[0]._id,
 			area: areas[0]._id,
 			address: '',
 			state: 'Activo',
@@ -96,8 +94,8 @@ export const FormUser = ({ initialData, roles, areas }: FormUserProps) => {
 				const valuesUpdated = { ...values, state: values.state === 'Activo' ? true : false };
 				await axios.patch(`/users/${initialData._id}`, valuesUpdated);
 				toast({
-					description: 'Operación exitosa',
 					title: 'Exito',
+					description: 'Operación exitosa',
 				});
 				router.refresh();
 				router.push('/users');
@@ -113,7 +111,8 @@ export const FormUser = ({ initialData, roles, areas }: FormUserProps) => {
 				const { state, ...res } = values;
 				await axios.post('/users', res);
 				toast({
-					title: 'Operación exitosa',
+					title: 'Exito',
+					description: 'Operación exitosa',
 				});
 				router.refresh();
 				router.push('/users');
@@ -217,15 +216,9 @@ export const FormUser = ({ initialData, roles, areas }: FormUserProps) => {
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										{roleIds.map((rolId) => (
-											<SelectItem value={rolId} key={rolId}>
-												{roles.map(
-													({ name, _id }) =>
-														_id === rolId &&
-														`${name[0].toLocaleUpperCase()}${name
-															.slice(1)
-															.toLowerCase()}`
-												)}
+										{roles.map((role) => (
+											<SelectItem value={role._id} key={role._id}>
+												{role.name}
 											</SelectItem>
 										))}
 									</SelectContent>

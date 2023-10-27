@@ -3,13 +3,13 @@
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { Users, Folder, List, Layout, FolderCheck, FilesIcon, FileWarning } from 'lucide-react';
+import { Users, Folder, List, FolderCheck, FileWarning, FolderArchive, Home } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
 const routes = [
 	{
-		icon: Layout,
+		icon: Home,
 		href: '/',
 		label: 'Dashboard',
 		private: false,
@@ -36,19 +36,19 @@ const routes = [
 		icon: FileWarning,
 		href: '/problems',
 		label: 'Problemas',
-		private: true,
+		private: false,
 	},
 	{
 		icon: FolderCheck,
 		href: '/solutions',
 		label: 'Soluciones',
-		private: true,
+		private: false,
 	},
 	{
-		icon: FilesIcon,
+		icon: FolderArchive,
 		href: '/manuals',
 		label: 'Manuales',
-		private: true,
+		private: false,
 	},
 ];
 
@@ -70,7 +70,12 @@ export const Sidebar = () => {
 							onClick={() => onNavigate(route.href)}
 							className={cn(
 								'text-xs group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition',
-								pathname === route.href && 'bg-primary/10 text-primary'
+								pathname === route.href && 'bg-primary/10 text-primary',
+								route.private
+									? session?.user.role.name === 'ADMINISTRADOR'
+										? ''
+										: 'hidden'
+									: ''
 							)}
 							key={route.href}
 						>

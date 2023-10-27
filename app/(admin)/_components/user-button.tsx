@@ -46,23 +46,12 @@ export const UserButton = () => {
 			<DropdownMenuContent className='w-56' align='end' forceMount>
 				<DropdownMenuLabel className='font-normal'>
 					<div className='flex flex-col space-y-1'>
-						<span className='text-sm font-medium leading-none'>{session.user.username}</span>
-						<span className='text-xs leading-none text-muted-foreground'>
-							{session.user.name}
-						</span>
+						<span className='text-sm font-medium'>{session.user.name}</span>
+						<span className='text-xs text-muted-foreground'>{session.user.area.name}</span>
 					</div>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuGroup>
-					<DropdownMenuItem onClick={() => onNavigate('/settings')}>
-						Perfil
-						<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-					</DropdownMenuItem>
-					<DropdownMenuItem>
-						Configuración
-						<DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
-					</DropdownMenuItem>
-				</DropdownMenuGroup>
+				<DropdownMenuGroup></DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={handleSignOut}>
 					Cerrar sesión

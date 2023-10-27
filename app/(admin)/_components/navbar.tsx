@@ -21,7 +21,7 @@ export const Navbar = ({ notifications }: { notifications: Problem[] }) => {
 					)}
 				>
 					<Image
-						src='/next.svg'
+						src='/vercel.svg'
 						priority
 						alt='Logo'
 						width={150}

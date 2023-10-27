@@ -46,23 +46,6 @@ export const columns: ColumnDef<Manual>[] = [
 		},
 	},
 	{
-		accessorKey: 'description_solution',
-		header: ({ column }) => {
-			return (
-				<Button
-					variant='ghost'
-					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-				>
-					Desc. Solución
-					<ArrowUpDown className='ml-2 h-4 w-4' />
-				</Button>
-			);
-		},
-		cell: ({ row }) => {
-			return <Preview value={row.original.description_solution} />;
-		},
-	},
-	{
 		accessorKey: 'solution',
 		header: ({ column }) => {
 			return (

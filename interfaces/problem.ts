@@ -19,4 +19,6 @@ export interface Problem {
 	type: ProblemType;
 	state: ProblemState;
 	user: User;
+	createdAt: string;
+	updatedAt: string;
 }
