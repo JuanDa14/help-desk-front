@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { redirect } from 'next/navigation';
+import { ProtectedAreaComponent } from '@/components/protected-area-component';
 
 async function getManuals(access_token: string) {
 	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/manuals', {
@@ -31,9 +32,11 @@ const Manual = async () => {
 		<div className='p-6 space-y-3'>
 			<div className='flex justify-between items-center gap-x-2'>
 				<h3 className='text-4xl font-medium'>Manuales</h3>
-				<Button>
-					<Link href='/manuals/create'>Nuevo Manual</Link>
-				</Button>
+				<ProtectedAreaComponent areas={'TECNOLOGÍA DE LA INFORMACIÓN'}>
+					<Button>
+						<Link href='/manuals/create'>Nuevo Manual</Link>
+					</Button>
+				</ProtectedAreaComponent>
 			</div>
 			<Separator />
 			<div>

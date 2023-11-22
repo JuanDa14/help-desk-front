@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { redirect } from 'next/navigation';
 import { ProblemState } from '@/interfaces/problem';
+import { ProtectedAreaComponent } from '@/components/protected-area-component';
 
 async function getSolutions(access_token: string) {
 	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/solutions', {
@@ -32,9 +33,11 @@ const SolutionPage = async () => {
 		<div className='p-6 space-y-3'>
 			<div className='flex justify-between items-center gap-x-2'>
 				<h3 className='text-4xl font-medium'>Soluciones</h3>
-				<Button>
-					<Link href='/solutions/create'>Registrar Solucion</Link>
-				</Button>
+				<ProtectedAreaComponent areas={'TECNOLOGÍA DE LA INFORMACIÓN'}>
+					<Button>
+						<Link href='/solutions/create'>Registrar Solucion</Link>
+					</Button>
+				</ProtectedAreaComponent>
 			</div>
 			<Separator />
 			<div>

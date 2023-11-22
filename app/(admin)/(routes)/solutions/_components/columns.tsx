@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Solution } from '@/interfaces/solution';
 import { Preview } from '@/components/preview';
 import { format } from 'date-fns';
+import { ProtectedAreaComponent } from '@/components/protected-area-component';
 
 export const columns: ColumnDef<Solution>[] = [
 	{
@@ -86,18 +87,20 @@ export const columns: ColumnDef<Solution>[] = [
 		cell: ({ row }) => {
 			const { _id } = row.original;
 			return (
-				<div className='flex items-center justify-center gap-x-2'>
-					<Link href={`/solutions/${_id}`}>
-						<Button size={'icon'} type='button'>
-							<Pencil className='w-4 h-4' />
-						</Button>
-					</Link>
-					<Link href={`/manuals/create?solutionId=${_id}`}>
-						<Button size={'icon'} type='button' title='Crear Manual'>
-							<FolderArchive className='w-4 h-4' />
-						</Button>
-					</Link>
-				</div>
+				<ProtectedAreaComponent areas={'TECNOLOGÍA DE LA INFORMACIÓN'}>
+					<div className='flex items-center justify-center gap-x-2'>
+						<Link href={`/solutions/${_id}`}>
+							<Button size={'icon'} type='button'>
+								<Pencil className='w-4 h-4' />
+							</Button>
+						</Link>
+						<Link href={`/manuals/create?solutionId=${_id}`}>
+							<Button size={'icon'} type='button' title='Crear Manual'>
+								<FolderArchive className='w-4 h-4' />
+							</Button>
+						</Link>
+					</div>
+				</ProtectedAreaComponent>
 			);
 		},
 	},

@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
+
 const formSchema = z.object({
 	username: z.string({ required_error: 'Requerido' }).min(2, {
 		message: 'El nombre de usuario debe tener al menos 2 caracteres',
@@ -58,7 +59,7 @@ export const FormLogin = () => {
 									placeholder='nombre de usuario...'
 								/>
 							</FormControl>
-							<FormDescription className='text-xs'>
+							<FormDescription>
 								El nombre de usuario debe tener al menos 2 caracteres
 							</FormDescription>
 							<FormMessage />
@@ -76,10 +77,10 @@ export const FormLogin = () => {
 									disabled={form.formState.isSubmitting}
 									type='password'
 									{...field}
-									placeholder='contra...'
+									placeholder='contraseña...'
 								/>
 							</FormControl>
-							<FormDescription className='text-xs'>
+							<FormDescription>
 								La contraseña debe tener al menos 8 caracteres
 							</FormDescription>
 							<FormMessage />

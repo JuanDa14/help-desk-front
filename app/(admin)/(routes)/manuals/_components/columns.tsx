@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Manual } from '@/interfaces/manual';
 import { Preview } from '@/components/preview';
 import { ShowManualModal } from '@/components/modals/show-manual-modal';
+import { ProtectedAreaComponent } from '@/components/protected-area-component';
 
 export const columns: ColumnDef<Manual>[] = [
 	{
@@ -71,11 +72,13 @@ export const columns: ColumnDef<Manual>[] = [
 			const { _id } = row.original;
 			return (
 				<div className='flex items-center justify-center gap-x-2'>
-					<Link href={`/manuals/${_id}`}>
-						<Button size={'icon'} type='button'>
-							<Pencil className='w-4 h-4' />
-						</Button>
-					</Link>
+					<ProtectedAreaComponent areas={'TECNOLOGÍA DE LA INFORMACIÓN'}>
+						<Link href={`/manuals/${_id}`}>
+							<Button size={'icon'} type='button'>
+								<Pencil className='w-4 h-4' />
+							</Button>
+						</Link>
+					</ProtectedAreaComponent>
 					<ShowManualModal manual={row.original}>
 						<Button size={'icon'}>
 							<EyeIcon className='w-4 h-4' />
