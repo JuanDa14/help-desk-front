@@ -26,7 +26,11 @@ export const columns: ColumnDef<Manual>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <span className='text-xs font-medium capitalize'>{row.original.title}</span>;
+			return (
+				<span className='text-xs font-medium capitalize line-clamp-1'>
+					{row.original.title}
+				</span>
+			);
 		},
 	},
 	{
@@ -43,7 +47,7 @@ export const columns: ColumnDef<Manual>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <span className='text-xs'>{row.original.description}</span>;
+			return <p className='text-xs line-clamp-1'>{row.original.description}</p>;
 		},
 	},
 	{
